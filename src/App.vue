@@ -1,18 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Post :posts="posts" @selected-post-changed="Changed"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import Post from "./components/Post.vue"
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  },
+  name: "App",
+  components: { Post },
   data() {
     return {
       posts: [
@@ -33,6 +31,17 @@ export default {
           body: 'Ez a törzse az negyedik postnak'
         },
       ]
+    }
+  },
+  methods: {
+    Changed(e) {
+      this.posts.map(function (post) {
+        if (post.title != e.original.title) {
+          return post
+        }
+        post.title = e.new.title
+        return post
+      })
     }
   }
 }
